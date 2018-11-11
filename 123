@@ -1,0 +1,92 @@
+//d2 正確 d6錯誤 WIFI 4
+
+#include <Servo.h> 
+
+
+Servo myservo; 
+int pos = 90;
+int pot = 0;
+int sensorLeft =  A1 ;
+int sensorRight = A2 ;
+int sensorFuck = A3 ;
+int minLight = 300; 
+int WrongLed = 6 ; 
+int rightLed = 3 ;
+int brightness = 0 ;
+int fadeAmount = 3 ;
+int wifi = 4 ;
+const int buttonPin = 8; 
+int buttonState = 0; 
+
+void setup() 
+{ 
+  Serial.begin(9600);
+  myservo.attach(9); 
+pinMode(rightLed, OUTPUT);
+pinMode(WrongLed, OUTPUT);
+pinMode(wifi , OUTPUT);
+pinMode(buttonPin, INPUT);  
+} 
+  
+void loop() {
+   int readingLeft, readingRight , readingFuck; //readingRight=中間 readingFuck=下面 
+readingLeft = analogRead(sensorLeft);
+readingRight = analogRead(sensorRight);
+readingFuck= analogRead(sensorFuck);
+
+  Serial.print("left: "); Serial.print(readingLeft);
+  Serial.print(" right: "); Serial.println(readingRight); 
+  Serial.print(" middle: "); Serial.println(readingFuck); 
+  Serial.print(" V1: "); Serial.println(buttonPin); 
+buttonState = digitalRead(buttonPin);
+if (buttonState == HIGH)
+{ myservo.write(90);
+delay (200);
+}
+ if ( readingRight > minLight ||  readingFuck > minLight ||  readingLeft < minLight    )  
+  
+  {
+     
+ 
+
+ 
+   {  analogWrite(rightLed, brightness);
+     brightness = brightness + fadeAmount;
+     if (brightness <= 0 || brightness >= 255) 
+     fadeAmount = -fadeAmount ;
+     delay (10);
+
+  }
+digitalWrite(wifi,LOW);
+digitalWrite(WrongLed, LOW);                   
+    myservo.write(pos);
+                         
+      
+  } 
+  else
+  {
+  {
+digitalWrite(wifi ,HIGH);
+digitalWrite(rightLed, LOW);   
+
+ 
+ int readingLeft, readingRight , readingFuck; //readingRight=中間 readingFuck=下面 
+       
+  
+  {analogWrite(WrongLed, brightness);
+     brightness = brightness + fadeAmount;
+     if (brightness <= 0 || brightness >= 255) 
+     fadeAmount = -fadeAmount ;
+      delay (10);
+  }  
+     myservo.write(90);
+      
+                 
+                          
+  
+  }  
+
+  Serial.print("left: "); Serial.print(readingLeft);
+  Serial.print(" right: "); Serial.println(readingRight); 
+  Serial.print(" middle: "); Serial.println(readingFuck); 
+}}
